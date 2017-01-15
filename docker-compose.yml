@@ -1,0 +1,32 @@
+version: '2'
+
+services:
+  db:
+    image: mysql:8.0
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: fatfaldog
+      MYSQL_DATABASE: fatfaldog
+      MYSQL_USER: fatfaldog
+      MYSQL_PASSWORD: fatfaldog
+
+  front:
+    depends_on:
+      - db
+    build: .
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: always
+    environment:
+      DB_HOST: db:3306
+      DB_PASSWORD: fatfaldog
+      DB_USER: fatfaldog
+      DB_DATABASE: fatfaldog
+    volumes:
+      - ./src:/var/www/html
+
+volumes:
+  db_data:
