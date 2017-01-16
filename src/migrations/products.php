@@ -1,7 +1,8 @@
 <?php
 
-Class Migration {
-    const PRODUCTS = 10000;
+Class Migration
+{
+    const PRODUCTS = 2000;
     const PROPS = 100;
     const GROUPS = 10;
 
@@ -42,7 +43,7 @@ Class Migration {
      */
     private function createProductTable()
     {
-        $sql = 'CREATE TABLE `product`(`ID` INT NOT NULL AUTO_INCREMENT, `Name` VARCHAR(256) NOT NULL, `Price` INT NOT NULL, PRIMARY KEY (`ID`)) ENGINE = InnoDB;';
+        $sql = 'CREATE TABLE `product`(`id` INT NOT NULL AUTO_INCREMENT, `name` VARCHAR(256) NOT NULL, `price` INT NOT NULL, PRIMARY KEY (`id`)) ENGINE = InnoDB;';
         return $this->db->query($sql);
     }
 
@@ -53,7 +54,7 @@ Class Migration {
      */
     private function createPropGroupTable()
     {
-        $sql = 'CREATE TABLE `prop_group`(`ID` INT NOT NULL AUTO_INCREMENT, `Name` VARCHAR(256), PRIMARY KEY (`ID`)) ENGINE = InnoDB;';
+        $sql = 'CREATE TABLE `prop_group`(`id` INT NOT NULL AUTO_INCREMENT, `name` VARCHAR(256), PRIMARY KEY (`id`)) ENGINE = InnoDB;';
         return $this->db->query($sql);
     }
 
@@ -64,7 +65,7 @@ Class Migration {
      */
     private function createPropTable()
     {
-        $sql = 'CREATE TABLE `prop`(`ID` INT NOT NULL AUTO_INCREMENT, `Group` INT NOT NULL, `Name` VARCHAR(256) NOT NULL, PRIMARY KEY (`ID`)) ENGINE = InnoDB;';
+        $sql = 'CREATE TABLE `prop`(`id` INT NOT NULL AUTO_INCREMENT, `group` INT NOT NULL, `name` VARCHAR(256) NOT NULL, PRIMARY KEY (`id`)) ENGINE = InnoDB;';
         return $this->db->query($sql);
     }
 
@@ -75,7 +76,7 @@ Class Migration {
      */
     private function createProductPropRelationTable()
     {
-        $sql = 'CREATE TABLE `product_prop_relation`(`ID` INT NOT NULL AUTO_INCREMENT, `Product` INT NOT NULL, `Prop` INT NOT NULL, PRIMARY KEY (`ID`)) ENGINE = InnoDB;';
+        $sql = 'CREATE TABLE `product_prop_relation`(`product` INT NOT NULL, `prop` INT NOT NULL, UNIQUE (`product`, `prop`)) ENGINE = InnoDB;';
         return $this->db->query($sql);
     }
 
@@ -95,7 +96,7 @@ Class Migration {
 
         $values = implode(',', $products);
 
-        $sql = "INSERT INTO `product` (`Name`, `Price`) VALUES {$values}";
+        $sql = "INSERT INTO `product` (`name`, `price`) VALUES {$values}";
         return $this->db->query($sql);
     }
 
@@ -114,7 +115,7 @@ Class Migration {
 
         $values = implode(',', $groups);
 
-        $sql = "INSERT INTO `prop_group` (`Name`) VALUES {$values}";
+        $sql = "INSERT INTO `prop_group` (`name`) VALUES {$values}";
         return $this->db->query($sql);
     }
 
@@ -134,7 +135,7 @@ Class Migration {
 
         $values = implode(',', $props);
 
-        $sql = "INSERT INTO `prop` (`Group`, `Name`) VALUES {$values}";
+        $sql = "INSERT INTO `prop` (`group`, `name`) VALUES {$values}";
         return $this->db->query($sql);
     }
 
@@ -160,7 +161,7 @@ Class Migration {
 
         $values = implode(',', $relations);
 
-        $sql = "INSERT INTO `product_prop_relation` (`Product`, `Prop`) VALUES {$values}";
+        $sql = "INSERT INTO `product_prop_relation` (`product`, `prop`) VALUES {$values}";
         return $this->db->query($sql);
     }
 }

@@ -10,15 +10,15 @@
     <body>
         <main class="container">
             <ul class="list-group col-md-8">
-            <?php foreach($data['Products'] as $product): ?>
+            <?php foreach($data['products'] as $product): ?>
                 <li class="list-group-item">
                     <div class="panel panel-default">
-                        <div class="panel-heading"><?= $product['Name'] ?></div>
+                        <div class="panel-heading"><?= $product['name'] ?></div>
                         <div class="panel-body">
                             <ul class="list-group">
-                            <?php foreach($product['Properties'] as $propertie): ?>
+                            <?php foreach($product['props'] as $property): ?>
                                 <li class="list-group-item">
-                                    <span class="product__prop"><?= $propertie['Name'] ?></span>
+                                    <span class="product__prop"><?= $property['name'] ?></span>
                                 </li>
                             <?php endforeach; ?>
                             </ul>
@@ -29,23 +29,23 @@
             </ul>
             <form id="products-filter">
                 <ul class="list-group col-md-4">
-                    <?php foreach($data['Groups'] as $groupName => $properties): ?>
+                    <?php foreach($data['groups'] as $group): ?>
                     <li class="list-group-item">
                         <div class="panel panel-default">
-                            <div class="panel-heading"><?= $groupName ?></div>
+                            <div class="panel-heading"><?= $group['name'] ?></div>
                             <div class="panel-body">
                                 <ul class="list-group">
-                                <?php foreach($properties as $property): ?>
+                                <?php foreach($group['props'] as $property): ?>
                                     <li class="list-group-item">
                                         <label>
                                             <input
                                                 type="checkbox"
-                                                name="filter[prop][<?= $property['ID'] ?>]"
+                                                name="filter[prop][<?= $property['id'] ?>]"
                                                 value="true"
-                                                <?= $property['Available'] ? '': 'disabled="disabled"' ?>
-                                                <?= $property['Checked'] ? 'checked="checked"' : '' ?>
+                                                <?= $property['available'] || $group['selected'] ? '': 'disabled="disabled"' ?>
+                                                <?= $property['selected'] ? 'checked="checked"' : '' ?>
                                             >
-                                            <?= $property['Name'] ?>
+                                            <?= $property['name'] ?>
                                         </label>
                                     </li>
                                 <?php endforeach; ?>
